@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&display=swap");
+@import "tailwindcss";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@theme {
+  --backgrounds-gradient: "linear-gradient(to right, #213f63, #121247)";
+  --backgrounds-MainBackGround: url("assets\image\BackGround.jpg");
+  --backgrounds-MainBackGround02: url("assets\image\DarkBlueSimple DarkTechandGamingBio-LinkWebsite.png");
+  --backgrounds-Level02BackGround: url("assets\image\WhatsApp Image 2025-11-24 at 17.02.16_0b7119f0.jpg");
+  --backgrounds-Login: url("assets\image\Screenshot 2025-11-24 133259.png");
+
+  --font-fontPlaywrite:"Playwrite AU SA", cursive;
+}

@@ -1,2 +1,2 @@
 # Algorithm-Web
-مشروع التخرج الخاصة ل فريق الويب
+The web team's graduation project
