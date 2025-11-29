@@ -22,18 +22,18 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 md:flex md:space-x-10">
             <div>
               <h3 className="text-white font-semibold mb-3">Platform</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Courses</a></li>
-                <li><a href="#" className="hover:text-white">Tutorials</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
+              <ul className="space-y-2 text-sm text-white">
+                <li><a href="#" className="hover:text-blue-400">Courses</a></li>
+                <li><a href="#" className="hover:text-blue-400">Tutorials</a></li>
+                <li><a href="#" className="hover:text-blue-400">Contact</a></li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-white font-semibold mb-3">Community</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">GitHub</a></li>
-                <li><a href="#" className="hover:text-white">Newsletter</a></li>
+              <ul className="space-y-2 text-sm text-white">
+                <li><a href="#" className="hover:text-blue-400">GitHub</a></li>
+                <li><a href="#" className="hover:text-blue-400">Newsletter</a></li>
               </ul>
             </div>
           </div>
