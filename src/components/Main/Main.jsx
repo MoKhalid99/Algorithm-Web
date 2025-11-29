@@ -84,7 +84,7 @@ export default function Main() {
                 </ul>
               </div>
 
-              {/*About Me  */}
+              {/*About Me */}
               <Link
                 to="/AboutMe"
                 className="flex flex-col items-center justify-center text-center transform transition duration-500 hover:scale-110 hover:shadow-lg"
@@ -95,7 +95,7 @@ export default function Main() {
                 />
                 <p>About Me</p>
               </Link>
-
+              
               {/* Student Material */}
               <div className="relative group w-max">
                 {/* Dropdown Toggle */}

@@ -8,95 +8,116 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 
+/*
+
+Summary of Comments:
+
+States: errMsg, successMsg, loading for API feedback.
+
+Validation: Using Yup for name, email, password.
+
+Formik: Handles form state, validation, and submission.
+
+API Call: Axios posts form values, handles success/error.
+
+UI:
+
+Left side: image.
+
+Right side: form with inputs and submit button.
+
+Displays messages under form.
+
+Alternative login: FontAwesome icons for social logins.
+
+
+*/
+
 export default function Register() {
-  // لتخزين رسالة error , success من ال API
+  // State to store API error and success messages
   const [errMsg, setErrMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
 
-  // لتخزين loading أثناء انتظار استجابة ال API
+  // Loading state while waiting for API response
   const [loading, setLoading] = useState(false);
 
-  // useNavigate hook to navigate to another page
+  // Hook to navigate programmatically
   const navigate = useNavigate();
 
-  // validation by library yup بحيث ان مخليش ال user يدخل بيانات غير صحيحة
+  // Validation schema using Yup to enforce input rules
   const validationSchema = yup.object().shape({
     name: yup
       .string()
-      .required("name is required")
-      .matches(
-        /^[A-Za-z]+(?: [A-Za-z]+)?$/,
-        "name must contain only letters and one optional space"
-      )
-      .min(3, "min 3 characters")
-      .max(30, "max 20 characters"),
+      .required("Name is required")
+      .matches(/^[A-Za-z]+(?: [A-Za-z]+)?$/, "Name must contain only letters and one optional space")
+      .min(3, "Minimum 3 characters")
+      .max(30, "Maximum 30 characters"),
     email: yup
       .string()
-      .required("email is required")
-      .matches(
-        /^[A-Za-z0-9]+[A-Za-z0-9._-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,10}$/,
-        "please enter a valid email address"
-      ),
+      .required("Email is required")
+      .matches(/^[A-Za-z0-9]+[A-Za-z0-9._-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,10}$/, "Please enter a valid email address"),
     password: yup
       .string()
-      .required("password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-        "password must be 8-20 characters, include uppercase, lowercase, number, and special symbol"
-      ),
+      .required("Password is required")
+      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/, "Password must be 8-20 characters, include uppercase, lowercase, number, and special symbol"),
   });
 
-  // control the form using useFormik hook (library formik)
+  // Formik hook to control the form
   const formik = useFormik({
-    // تحديد القيم الابتدائية فى ال input
     initialValues: {
       name: "",
       email: "",
       password: "",
     },
 
-    // function بتخزن قيم values و بتفضى error message , success message
+    // Handle form submission
     onSubmit: async function (values) {
-      setErrMsg(null);
-      setSuccessMsg(null);
-      setLoading(true);
+      setErrMsg(null);      // Clear previous errors
+      setSuccessMsg(null);  // Clear previous success messages
+      setLoading(true);     // Start loading
 
-      // call Api by axios library and send values
       try {
+        // Call API to register user
         const responsive = await axios.post(
           "https://ecommerce.routemisr.com/api/v1/auth/signup",
           values
         );
-        // بيخزن رسالة النجاح
-        setSuccessMsg(responsive.data.message);
-        // بروح لصفحة اللوجنن لو call api تم بنجاح
+
+        setSuccessMsg(responsive.data.message); // Show success message
+
+        // Navigate to login page after 1 second
         setTimeout(() => {
           navigate("/Login");
         }, 1000);
       } catch (err) {
-        // لو حصل خطا فى تنفيذ api الجزء دا بيشتغل بيخزن رسالة الخطا
+              // Show error message if API fails
         setErrMsg(err?.response?.data?.errors?.msg);
         console.log(err?.response?.data?.errors?.msg);
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading
       }
     },
-    // بباصى ال validation لل formik
-    validationSchema: validationSchema,
+
+    validationSchema: validationSchema, // Apply Yup validation
   });
+
   return (
     <>
       <div className="[background:linear-gradient(to_left,#3533CC,#000003)]">
-        <div className="md:w-[90%] md:flex justify-between items-center mx-auto pt-32 p-5 rounded-lg  text-white ">
+        <div className="md:w-[90%] md:flex justify-between items-center mx-auto pt-32 p-5 rounded-lg text-white">
+          
+          {/* Left side image */}
           <div className="md:w-[50%]">
             <img src={img} alt="Register" />
           </div>
 
+          {/* Registration form */}
           <form onSubmit={formik.handleSubmit} className="md:w-[40%]">
             <h1 className="text-2xl font-bold my-6 text-center font-fontPlaywrite">
               Create New Account
             </h1>
-            <div className="space-y-6 my-10 ">
+
+            <div className="space-y-6 my-10">
               {/* Name Input */}
               <div className="relative">
                 <input
@@ -104,19 +125,15 @@ export default function Register() {
                   id="name"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600 "
+                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600"
                   placeholder="Your Name"
                 />
               </div>
-              {formik.errors.name && formik.touched.name ? (
-                <div
-                  className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50"
-                  role="alert"
-                >
-                  <span className="font-medium">Danger alert!</span>{" "}
-                  {formik.errors.name}
+              {formik.errors.name && formik.touched.name && (
+                <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50" role="alert">
+                  <span className="font-medium">Danger alert!</span> {formik.errors.name}
                 </div>
-              ) : null}
+              )}
 
               {/* Email Input */}
               <div className="relative">
@@ -125,19 +142,15 @@ export default function Register() {
                   id="email"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600 "
+                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600"
                   placeholder="Email Address"
                 />
               </div>
-              {formik.errors.email && formik.touched.email ? (
-                <div
-                  className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50"
-                  role="alert"
-                >
-                  <span className="font-medium">Danger alert!</span>{" "}
-                  {formik.errors.email}
+              {formik.errors.email && formik.touched.email && (
+                <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50" role="alert">
+                  <span className="font-medium">Danger alert!</span> {formik.errors.email}
                 </div>
-              ) : null}
+              )}
 
               {/* Password Input */}
               <div className="relative">
@@ -146,21 +159,18 @@ export default function Register() {
                   id="password"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600 "
+                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600"
                   placeholder="Your Password"
                 />
               </div>
-              {formik.errors.password && formik.touched.password ? (
-                <div
-                  className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50"
-                  role="alert"
-                >
-                  <span className="font-medium">Danger alert!</span>{" "}
-                  {formik.errors.password}
+              {formik.errors.password && formik.touched.password && (
+                <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50" role="alert">
+                  <span className="font-medium">Danger alert!</span> {formik.errors.password}
                 </div>
-              ) : null}
+              )}
             </div>
 
+            {/* Submit button and alternative login options */}
             <div className="mb-10 text-center">
               <div className="my-4">
                 <p>Or Login With</p>
@@ -171,22 +181,23 @@ export default function Register() {
               </div>
               <button
                 type="submit"
-                className="bg-[#5C7BA3] px-8 py-2 cursor-pointer  text-lg rounded-full"
+                className="bg-[#5C7BA3] px-8 py-2 cursor-pointer text-lg rounded-full"
               >
-                {loading ? "Loading..." : "submit"}
+                {loading ? "Loading..." : "Submit"}
               </button>
             </div>
 
-            {errMsg ? (
-              <div className="p-4 mt-4 text-base text-red-800 rounded-lg bg-red-50 ">
+            {/* Show error or success messages */}
+            {errMsg && (
+              <div className="p-4 mt-4 text-base text-red-800 rounded-lg bg-red-50">
                 {errMsg}
               </div>
-            ) : null}
-            {successMsg ? (
-              <div className="p-4 mt-4 text-base text-green-800 rounded-lg bg-green-50 ">
+            )}
+            {successMsg && (
+              <div className="p-4 mt-4 text-base text-green-800 rounded-lg bg-green-50">
                 {successMsg}
               </div>
-            ) : null}
+            )}
           </form>
         </div>
       </div>
