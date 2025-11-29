@@ -1,12 +1,12 @@
-import React, { useState } from "react"; // React and useState hook
-import img from "../../assets/image/Screenshot 2025-11-23 173118.png"; // Register image
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // FontAwesome for icons
+import React, { useState } from "react";
+import img from "../../assets/image/Screenshot 2025-11-23 173118.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom"; // Navigation hook
-import * as yup from "yup"; // Yup validation library
-import { useFormik } from "formik"; // Formik for form handling
-import axios from "axios"; // Axios for API requests
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import axios from "axios";
 
 export default function Register() {
   const [errMsg, setErrMsg] = useState(null);
@@ -30,6 +30,7 @@ export default function Register() {
       .required("Password is required")
       .min(6, "Password must be at least 6 characters")
       .matches(/^(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/, "Password must include at least one letter and one number"),
+
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -49,10 +50,13 @@ export default function Register() {
       setLoading(true);
 
       try {
+        // Send only name, email, password to API
+        const { name, email, password } = values;
         const responsive = await axios.post(
           "https://ecommerce.routemisr.com/api/v1/auth/signup",
-          values
+          { name, email, password }
         );
+
         setSuccessMsg(responsive.data.message);
         setTimeout(() => navigate("/Login"), 1000);
       } catch (err) {
@@ -68,19 +72,16 @@ export default function Register() {
   return (
     <div className="[background:linear-gradient(to_left,#3533CC,#000003)]">
       <div className="md:w-[90%] md:flex justify-between items-center mx-auto pt-32 p-5 rounded-lg text-white">
-        {/* Left Image */}
         <div className="md:w-[50%]">
           <img src={img} alt="Register" />
         </div>
 
-        {/* Form */}
         <form onSubmit={formik.handleSubmit} className="md:w-[40%]">
           <h1 className="text-2xl font-bold my-6 text-center font-fontPlaywrite">
             Create New Account
           </h1>
 
           <div className="space-y-6 my-10">
-            {/* Name */}
             <input
               type="text"
               name="name"
@@ -95,7 +96,6 @@ export default function Register() {
               <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50">{formik.errors.name}</div>
             )}
 
-            {/* Email */}
             <input
               type="email"
               name="email"
@@ -110,7 +110,6 @@ export default function Register() {
               <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50">{formik.errors.email}</div>
             )}
 
-            {/* Password */}
             <input
               type="password"
               name="password"
@@ -125,7 +124,6 @@ export default function Register() {
               <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50">{formik.errors.password}</div>
             )}
 
-            {/* Confirm Password */}
             <input
               type="password"
               name="confirmPassword"
@@ -141,7 +139,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Submit + Social login */}
           <div className="mb-10 text-center">
             <p>Or Login With</p>
             <div className="text-white my-2 space-x-3">
@@ -156,7 +153,6 @@ export default function Register() {
             </button>
           </div>
 
-          {/* API messages */}
           {errMsg && <div className="p-4 mt-4 text-base text-red-800 rounded-lg bg-red-50">{errMsg}</div>}
           {successMsg && <div className="p-4 mt-4 text-base text-green-800 rounded-lg bg-green-50">{successMsg}</div>}
         </form>
