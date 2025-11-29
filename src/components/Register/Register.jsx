@@ -26,9 +26,10 @@ export default function Register() {
       .required("Email is required")
       .matches(/^[A-Za-z0-9]+[A-Za-z0-9._-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,10}$/, "Please enter a valid email address"),
     password: yup
-      .string()
-      .required("Password is required")
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/, "Password must be 8-20 characters, include uppercase, lowercase, number, and special symbol"),
+  .string()
+  .required("Password is required")
+  .min(6, "Password must be at least 6 characters")
+  .matches(/^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{6,}$/, "Password must include at least one letter and one number"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
