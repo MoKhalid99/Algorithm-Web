@@ -2,7 +2,8 @@ import React from 'react';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
 
-// this code involves designing footer section 
+/* this code involves designing footer section  */
+
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 mt-10">
