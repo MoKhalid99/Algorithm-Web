@@ -6,7 +6,7 @@ import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from 'react-icons/fa';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-10">
+    <footer className="[background:linear-gradient(to_right,#213f63,#121247)]">
       <div className="max-w-7xl mx-auto px-6 py-10">
         {/* Top section */}
         <div className="md:flex md:justify-between md:items-start">
@@ -22,18 +22,18 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 md:flex md:space-x-10">
             <div>
               <h3 className="text-white font-semibold mb-3">Platform</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">Courses</a></li>
-                <li><a href="#" className="hover:text-white">Tutorials</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
+              <ul className="space-y-2 text-sm text-white">
+                <li><a href="#" className="hover:text-blue-400">Courses</a></li>
+                <li><a href="#" className="hover:text-blue-400">Tutorials</a></li>
+                <li><a href="#" className="hover:text-blue-400">Contact</a></li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-white font-semibold mb-3">Community</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white">GitHub</a></li>
-                <li><a href="#" className="hover:text-white">Newsletter</a></li>
+              <ul className="space-y-2 text-sm text-white">
+                <li><a href="#" className="hover:text-blue-400">GitHub</a></li>
+                <li><a href="#" className="hover:text-blue-400">Newsletter</a></li>
               </ul>
             </div>
           </div>
@@ -47,12 +47,13 @@ export default function Footer() {
           </p>
 
           {/* Social Icons */}
-          <div className="flex space-x-4">
-            <a href="#" className="hover:text-white"><FaFacebookF /></a>
-            <a href="#" className="hover:text-white"><FaTwitter /></a>
-            <a href="#" className="hover:text-white"><FaLinkedinIn /></a>
-            <a href="#" className="hover:text-white"><FaGithub /></a>
+          <div className="flex space-x-4 text-white">
+            <a href="#" className="hover:text-blue-400"><FaFacebookF /></a>
+            <a href="#" className="hover:text-blue-400"><FaTwitter /></a>
+            <a href="#" className="hover:text-blue-400"><FaLinkedinIn /></a>
+            <a href="#" className="hover:text-blue-400"><FaGithub /></a>
           </div>
+
         </div>
       </div>
     </footer>
