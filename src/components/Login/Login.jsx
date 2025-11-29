@@ -1,3 +1,5 @@
+
+
 // Import hooks and libraries
 import { useNavigate } from "react-router-dom"; // For navigation after login
 import React, { useContext, useState } from "react"; // React core features
@@ -5,6 +7,24 @@ import * as yup from "yup"; // For validation
 import { useFormik } from "formik"; // For form handling
 import axios from "axios"; // For API requests
 import { AuthContext } from "../Context/Context"; // Context for authentication
+
+/*
+
+Summary of the code:
+
+Formik + Yup handles form state and validation.
+
+Axios sends login request to backend.
+
+AuthContext stores token globally on login.
+
+Conditional messages for success and errors.
+
+Loading state disables button feedback while waiting for API.
+
+Responsive and styled using Tailwind CSS.
+
+*/
 
 // Login component: allows users to sign in
 export default function Login() {
