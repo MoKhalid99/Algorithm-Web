@@ -40,7 +40,7 @@ export default function Register() {
       name: "",
       email: "",
       password: "",
-      confirmPassword: "", // إضافة حقل تأكيد كلمة المرور
+      confirmPassword: "", //adding confirm password field 
     },
     onSubmit: async function (values) {
       setErrMsg(null);
