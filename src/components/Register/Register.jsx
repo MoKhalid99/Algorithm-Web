@@ -3,16 +3,11 @@ import img from "../../assets/image/Screenshot 2025-11-23 173118.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import axios from "axios";
 
 export default function Register() {
-  const [errMsg, setErrMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const validationSchema = yup.object().shape({
     name: yup
@@ -30,7 +25,6 @@ export default function Register() {
       .required("Password is required")
       .min(6, "Password must be at least 6 characters")
       .matches(/^(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/, "Password must include at least one letter and one number"),
-
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -44,27 +38,10 @@ export default function Register() {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: async function (values) {
-      setErrMsg(null);
-      setSuccessMsg(null);
-      setLoading(true);
-
-      try {
-        // Send only name, email, password to API
-        const { name, email, password } = values;
-        const responsive = await axios.post(
-          "https://ecommerce.routemisr.com/api/v1/auth/signup",
-          { name, email, password }
-        );
-
-        setSuccessMsg(responsive.data.message);
-        setTimeout(() => navigate("/Login"), 1000);
-      } catch (err) {
-        setErrMsg(err?.response?.data?.errors?.msg);
-        console.log(err?.response?.data?.errors?.msg);
-      } finally {
-        setLoading(false);
-      }
+    onSubmit: function (values) {
+      // فقط عرض رسالة نجاح على الـ frontend
+      setSuccessMsg("Form submitted successfully!");
+      console.log("Form values:", values);
     },
     validationSchema: validationSchema,
   });
@@ -149,11 +126,10 @@ export default function Register() {
               type="submit"
               className="bg-[#5C7BA3] px-8 py-2 cursor-pointer text-lg rounded-full"
             >
-              {loading ? "Loading..." : "Submit"}
+              Submit
             </button>
           </div>
 
-          {errMsg && <div className="p-4 mt-4 text-base text-red-800 rounded-lg bg-red-50">{errMsg}</div>}
           {successMsg && <div className="p-4 mt-4 text-base text-green-800 rounded-lg bg-green-50">{successMsg}</div>}
         </form>
       </div>
