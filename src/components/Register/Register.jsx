@@ -35,7 +35,7 @@ export default function Register() {
       .string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters")
-      .matches(/^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{6,}$/, "Password must include at least one letter and one number"),
+      .matches(/^(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/, "Password must include at least one letter and one number"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match") // Validate matching password
