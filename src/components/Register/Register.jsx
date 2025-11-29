@@ -8,43 +8,12 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 
-/*
-
-Summary of Comments:
-
-States: errMsg, successMsg, loading for API feedback.
-
-Validation: Using Yup for name, email, password.
-
-Formik: Handles form state, validation, and submission.
-
-API Call: Axios posts form values, handles success/error.
-
-UI:
-
-Left side: image.
-
-Right side: form with inputs and submit button.
-
-Displays messages under form.
-
-Alternative login: FontAwesome icons for social logins.
-
-
-*/
-
 export default function Register() {
-  // State to store API error and success messages
   const [errMsg, setErrMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
-
-  // Loading state while waiting for API response
   const [loading, setLoading] = useState(false);
-
-  // Hook to navigate programmatically
   const navigate = useNavigate();
 
-  // Validation schema using Yup to enforce input rules
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -60,45 +29,42 @@ export default function Register() {
       .string()
       .required("Password is required")
       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/, "Password must be 8-20 characters, include uppercase, lowercase, number, and special symbol"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
   });
 
-  // Formik hook to control the form
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "", // إضافة حقل تأكيد كلمة المرور
     },
-
-    // Handle form submission
     onSubmit: async function (values) {
-      setErrMsg(null);      // Clear previous errors
-      setSuccessMsg(null);  // Clear previous success messages
-      setLoading(true);     // Start loading
+      setErrMsg(null);
+      setSuccessMsg(null);
+      setLoading(true);
 
       try {
-        // Call API to register user
         const responsive = await axios.post(
           "https://ecommerce.routemisr.com/api/v1/auth/signup",
           values
         );
 
-        setSuccessMsg(responsive.data.message); // Show success message
-
-        // Navigate to login page after 1 second
+        setSuccessMsg(responsive.data.message);
         setTimeout(() => {
           navigate("/Login");
         }, 1000);
       } catch (err) {
-              // Show error message if API fails
         setErrMsg(err?.response?.data?.errors?.msg);
         console.log(err?.response?.data?.errors?.msg);
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
     },
-
-    validationSchema: validationSchema, // Apply Yup validation
+    validationSchema: validationSchema,
   });
 
   return (
@@ -106,12 +72,10 @@ export default function Register() {
       <div className="[background:linear-gradient(to_left,#3533CC,#000003)]">
         <div className="md:w-[90%] md:flex justify-between items-center mx-auto pt-32 p-5 rounded-lg text-white">
           
-          {/* Left side image */}
           <div className="md:w-[50%]">
             <img src={img} alt="Register" />
           </div>
 
-          {/* Registration form */}
           <form onSubmit={formik.handleSubmit} className="md:w-[40%]">
             <h1 className="text-2xl font-bold my-6 text-center font-fontPlaywrite">
               Create New Account
@@ -168,9 +132,26 @@ export default function Register() {
                   <span className="font-medium">Danger alert!</span> {formik.errors.password}
                 </div>
               )}
+
+              {/* Confirm Password Input */}
+              <div className="relative">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  className="w-full rounded-full bg-gray-300 text-black font-bold text-center border border-gray-600"
+                  placeholder="Confirm Password"
+                />
+              </div>
+              {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+                <div className="p-4 mb-4 text-base text-red-800 rounded-lg bg-red-50" role="alert">
+                  <span className="font-medium">Danger alert!</span> {formik.errors.confirmPassword}
+                </div>
+              )}
             </div>
 
-            {/* Submit button and alternative login options */}
+            {/* Submit button and alternative login */}
             <div className="mb-10 text-center">
               <div className="my-4">
                 <p>Or Login With</p>
@@ -187,7 +168,6 @@ export default function Register() {
               </button>
             </div>
 
-            {/* Show error or success messages */}
             {errMsg && (
               <div className="p-4 mt-4 text-base text-red-800 rounded-lg bg-red-50">
                 {errMsg}
