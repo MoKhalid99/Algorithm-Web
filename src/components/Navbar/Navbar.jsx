@@ -2,6 +2,37 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/Context";
 
+/*
+
+
+Key Points:
+
+Auth-aware Navigation:
+
+Shows "Log Out" when token exists.
+
+Shows "Sign In" and "Log In" when user is not logged in.
+
+Logout Behavior:
+
+Clears the token from both localStorage and context.
+
+Redirects user to homepage /.
+
+Responsive Styling:
+
+w-[90%] mx-auto keeps navbar centered.
+
+fixed top-0 keeps navbar at top of page.
+
+flex justify-between aligns brand and links nicely.
+
+Hover Effects:
+
+Links highlight on hover using Tailwind classes like hover:text-blue-600 underline-offset-4 underline.
+
+
+*/
 export default function Navbar() {
   // بعمل ديستركت لل token من ال context
   let { token, setToken } = useContext(AuthContext);
