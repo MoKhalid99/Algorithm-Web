@@ -11,6 +11,25 @@ import { faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
+/*
+
+Key Explanations:
+
+Grid Layout: The main features (Chatting, Contact, Courses, etc.) are arranged using a responsive CSS grid.
+
+Hover Effects: Each card scales and adds shadow when hovered using Tailwind CSS transform and transition.
+
+Dropdowns: Both "Collage Courses" and "Student Material" use group-hover to show hidden dropdown menus.
+
+Icons: FontAwesome icons are used for visual cues and social media links.
+
+Responsiveness: The layout adapts for mobile, tablet, and desktop using Tailwind's responsive utilities (md:, lg:).
+
+Backgrounds: The main container and inner card use background images with bg-cover, bg-center, and bg-no-repeat.
+
+
+
+*/
 export default function Main() {
   // Dropdown menu items
   const LevelsDropdownItems = [
