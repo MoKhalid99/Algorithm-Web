@@ -84,16 +84,16 @@ export default function Main() {
                 </ul>
               </div>
 
-              {/*About Me */}
+              {/*About US */}
               <Link
-                to="/AboutMe"
+                to="/AboutUs"
                 className="flex flex-col items-center justify-center text-center transform transition duration-500 hover:scale-110 hover:shadow-lg"
               >
                 <FontAwesomeIcon
                   icon={faComment}
                   className="text-5xl text-white"
                 />
-                <p>About Me</p>
+                <p>About Us</p>
               </Link>
               
               {/* Student Material */}
