@@ -3,7 +3,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
-import AboutMe from "./components/AboutMe/AboutMe";
+import AboutUs from "./components/AboutUs/AboutUs"
 import ExtraCourses from "./components/ExtraCourses/ExtraCourses";
 import CollageCourses from "./components/collageCourses/collageCourses";
 import ContactUs from "./components/ContactUs/ContactUs";
@@ -48,8 +48,8 @@ const routes = createBrowserRouter([
         element: <Chatting />,
       },
       {
-        path: "AboutMe",
-        element: <AboutMe />,
+        path: "AboutUs",
+        element: <AboutUs />,
       },
       {
         path: "ContactUs",
